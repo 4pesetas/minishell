@@ -104,7 +104,7 @@ static void	main_loop(t_data *data)
 
 	while (1)
 	{
-		input = readline("minishell$ ");
+		input = readline("ʍìղìʂհҽӀӀ$ ");
 		if (!input)
 			break ;
 		if (*input)
