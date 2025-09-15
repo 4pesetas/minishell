@@ -19,7 +19,6 @@ t_cmd	*get_cmds_from_input(char *input, t_data *data)
 
 int	handle_builtin(char **args, t_data *data)
 {
-
 	if (ft_strcmp(args[0], "echo") == 0)
 		return (data->last_status = echo_builtin(args, data));
 	if (ft_strcmp(args[0], "cd") == 0)
@@ -70,7 +69,6 @@ void	process_input(char *input, t_data *data)
 {
 	t_cmd	*cmds;
 	int		status;
-
 
 	if (!input || check_input_quotes(input))
 		return ;

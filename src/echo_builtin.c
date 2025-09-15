@@ -3,55 +3,20 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
-int	print_variable(char *token, int i, char **env)
+int	ft_is_n(char *args)
 {
-	char	*name;
-	char	*value;
-	int		start;
+	int	i;
 
-	start = i + 1;
-	if (!token[start])
-		return (i + 1);
-	if (!ft_isalnum(token[start]) && token[start] != '_')
-		return (i + 2);
-	while (token[start] && (ft_isalnum(token[start]) || token[start] == '_'))
-		start++;
-	name = ft_substr(token, i + 1, start - (i + 1));
-	if (!name)
-		return (start);
-	value = get_env_value(env, name);
-	if (value)
-		ft_printf("%s", value);
-	free(name);
-	return (start);
-}
-
-void	print_expanded(char *token, t_data *data)
-{
-	int		i;
-	t_state	state;
-
-	i = 0;
-	state = NORMAL;
-	while (token[i])
+	if (!args || args[0] != '-' || args[1] != 'n')
+		return (0);
+	i = 2;
+	while (args[i])
 	{
-		state = toggle_quote(token[i], state);
-		if ((token[i] == 39 && state == IN_SINGLE) || (token[i] == 34
-				&& state == IN_DOUBLE))
-			i++;
-		else if (token[i] == '$' && token[i + 1] && state != IN_SINGLE)
-		{
-			if (token[i + 1] == '?')
-			{
-				ft_printf("%d", data->last_status);
-				i += 2;
-			}
-			else
-				i = print_variable(token, i, data->env);
-		}
-		else
-			ft_printf("%c", token[i++]);
+		if (args[i] != 'n')
+			return (0);
+		i++;
 	}
+	return (1);
 }
 
 int	echo_builtin(char **args, t_data *data)

@@ -5,7 +5,7 @@
 
 void	append_token(t_token **head, char *value, int type)
 {
-	t_token *new_node;
+	t_token	*new_node;
 	t_token	*temp;
 
 	new_node = malloc(sizeof(t_token));
@@ -27,7 +27,7 @@ void	append_token(t_token **head, char *value, int type)
 	temp->next = new_node;
 }
 
-static int handle_operator(char *input, int *i, t_token **head)
+static int	handle_operator(char *input, int *i, t_token **head)
 {
 	if (input[*i] == '|')
 		append_token(head, "|", T_PIPE);

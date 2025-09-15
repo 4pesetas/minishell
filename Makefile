@@ -12,11 +12,12 @@ LIBFT       = $(LIBFT_DIR)/libft.a
 
 SRC         = minishell.c cd_builtin.c echo_builtin.c env_builtin.c \
 				pwd_builtin.c export_builtin.c unset_builtin.c \
-				exit_builtin.c cd_utils.c utils.c echo_utils.c \
-				signals.c expand.c parser.c parser_utils.c env_utils.c \
-				export_utils.c expand_utils.c expand_quotes.c commands.c \
+				exit_builtin.c cd_utils.c utils.c heredoc.c \
+				signals.c expand.c parser.c env_utils.c \
+				export_utils.c expand_utils.c commands.c \
 				tokenizer.c commands_utils.c process_input.c process_utils.c \
-				redirections.c execute.c free.c error.c
+				redirections.c execute.c free.c error.c pipe.c pipe_utils.c \
+				
 
 OBJS = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

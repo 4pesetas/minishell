@@ -3,10 +3,10 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
-void rl_print_error_and_reset_prompt(char *msg)
+void	rl_print_error_and_reset_prompt(char *msg)
 {
-	ft_putendl_fd(msg, 2);              /* print error on stderr */
-	rl_replace_line("", 0);             /* clear current input line */
-	rl_on_new_line();                   /* move to new line */
-	rl_redisplay();                     /* force prompt redraw */
+	ft_putendl_fd(msg, 2);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }

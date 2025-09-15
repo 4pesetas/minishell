@@ -46,29 +46,3 @@ int	are_unclosed_quotes(char *str)
 		return (1);
 	return (0);
 }
-
-char	**tokenize_input(char *input)
-{
-	int		i;
-	int		start;
-	char	**tokens;
-	t_state	state;
-
-	i = 0;
-	start = 0;
-	tokens = NULL;
-	state = NORMAL;
-	while (input[i] != '\0')
-	{
-		state = toggle_quote(input[i], state);
-		if (input[i] == ' ' && state == NORMAL)
-		{
-			finish_space_token(&tokens, input, start, i);
-			start = i + 1;
-		}
-		i++;
-	}
-	finish_space_token(&tokens, input, start, i);
-	add_token(&tokens, NULL);
-	return (tokens);
-}

@@ -3,6 +3,29 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
+t_state	update_state(t_state state, char ch)
+{
+	if (ch == '\'')
+	{
+		if (state == NORMAL)
+			state = (IN_SINGLE);
+		else if (state == IN_SINGLE)
+			state = (NORMAL);
+		else if (state == IN_DOUBLE)
+			state = (IN_DOUBLE);
+	}
+	else if (ch == '"')
+	{
+		if (state == NORMAL)
+			state = (IN_DOUBLE);
+		else if (state == IN_DOUBLE)
+			state = (NORMAL);
+		else if (state == IN_SINGLE)
+			state = (IN_SINGLE);
+	}
+	return (state);
+}
+
 static char	*handle_special_dollar(const char *str, int *i, t_data *data)
 {
 	if (str[*i + 1] == '?')
@@ -18,7 +41,8 @@ static char	*handle_special_dollar(const char *str, int *i, t_data *data)
 	return (NULL);
 }
 
-static char	*get_variable_value(const char *str, int *i, t_data *data, int start)
+static char	*get_variable_value(const char *str, int *i, t_data *data,
+	int start)
 {
 	char	*name;
 	char	*value;

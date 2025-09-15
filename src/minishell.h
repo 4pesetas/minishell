@@ -55,6 +55,13 @@ typedef struct s_redir
 	struct s_redir	*next;
 }	t_redir;
 
+typedef struct s_pipe_ctx
+{
+	int		*pipefds;
+	int		num_cmds;
+	t_data	*data;
+}	t_pipe_ctx;
+
 typedef struct s_cmd
 {
 	char			**argv;
@@ -66,6 +73,10 @@ typedef struct s_cmd
 void	handle_sigint(int sig);
 
 void	process_input(char *input, t_data *data);
+int		is_builtin_name(char *name);
+int		check_input_quotes(char *input);
+void	clean_tokens(t_token *head, t_data *data);
+void	restore_stdio(int saved_in, int saved_out);
 
 int		handle_builtin(char **args, t_data *data);
 int		echo_builtin(char **args, t_data *data);
@@ -82,16 +93,19 @@ void	update_pwd_and_oldpwd(char *oldpwd, char *pwd, char ***env);
 int		cd_to_home(t_data *data);
 int		cd_to_path(char *path, t_data *data);
 char	*find_in_path(char *cmd, t_data *data);
-char	**tokenize_input(char *input);
 
 char	*expand_variable(const char *str, int *i, t_data *data);
 char	*append_char(char *result, char ch);
 char	*append_str(char *result, const char *s);
 char	*expand_token(char *token, t_data *data);
-char	*handle_quote_char(char *result, char *token, int *i, t_state *state);
+t_state	update_state(t_state state, char ch);
 
+int		count_cmds(t_cmd *cmds);
+int		execute_cmds(t_cmd *cmds, t_data *data);
+void	exec_child_command(t_cmd *cmds, t_data *data);
 t_token	*tokenize_to_list(char *input);
 t_cmd	*parse_tokens_to_cmds(t_token *tokens);
+void	close_all_pipes(int *pipefds, int n);
 
 int		set_env_var(char ***env, const char *key, const char *value);
 char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
@@ -104,27 +118,18 @@ void	bubble_sort_env(char **env, int count);
 int		count_env_vars(char **env);
 int		ft_strcmp(char *s1, char *s2);
 int		is_valid_identifier(char *s);
+int		are_unclosed_quotes(char *str);
 
 int		ft_is_space(char c);
-int		ft_is_n(char *args);
-int		are_unclosed_quotes(char *str);
-void	finish_space_token(char ***tokens, char *input, int start, int i);
-void	add_token(char ***tokens, char *new_token);
-t_state	toggle_quote(char c, t_state state);
-
-void rl_print_error_and_reset_prompt(char *msg);
-t_state	update_state(t_state state, char ch);
-int	execute_cmds(t_cmd *cmds, t_data *data);
-int	check_input_quotes(char *input);
-void clean_tokens(t_token *head, t_data *data);
-void	restore_stdio(int saved_in, int saved_out);
-int		handle_redirections(t_cmd *cmd);
-int		apply_redirections(t_cmd *cmd, int *saved_in, int *saved_out);
-
 char	**ft_realloc_argv(char **argv, int argc, char *new_str);
 
-void	print_declare_line(char *entry);
+int		handle_heredoc(char *delim);
+int		handle_redirections(t_cmd *cmd);
+int		apply_redirections(t_cmd *cmd, int *saved_in, int *saved_out);
+int		write_heredoc_input(char *delim, int fd);
 
+void	print_declare_line(char *entry);
+void	rl_print_error_and_reset_prompt(char *msg);
 void	free_string_array(char **array);
 void	free_tokens(t_token *head);
 void	free_redirs(t_redir *r);

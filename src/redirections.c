@@ -17,6 +17,11 @@ int	handle_redirections(t_cmd *cmd)
 			fd = open(redir->target, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		else if (redir->type == T_REDIR_IN)
 			fd = open(redir->target, O_RDONLY);
+		else if (redir->type == T_HEREDOC)
+		{
+			if (handle_heredoc(redir->target) != 0)
+				return (1);
+		}
 		if (fd < 0)
 		{
 			perror("minishell: open");
