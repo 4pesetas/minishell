@@ -1,0 +1,13 @@
+Signals
+- Try ctrl-C in an empty prompt should show a new line with a new prompt✨
+- Try ctrl-\ in an empty prompt should not do anything✨
+- Try ctrl-D in an empty prompt should quit minishell --> RELAUNCH!✨
+- Try ctrl-C in a prompt after you wrote some stuff should show a new line with a new prompt✨
+- Try ctrl-D in a prompt after you wrote some stuff should not do anything✨
+- Try ctrl-\ in a prompt after you wrote some stuff should quit minishell --> RELAUNCH! 📝 !!!
+- Try ctrl-C after running a blocking command like cat or grep without arguments✨
+- Try ctrl-\ after running a blocking command like cat or grep without arguments✨
+- Try ctrl-D after running a blocking command like cat or grep without arguments✨
+- Repeat multiple times with different commands✨
+- if something crashes use the crash flag.✨
+- if something is not working use the incomplete work flag.✨
