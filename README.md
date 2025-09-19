@@ -1,7 +1,7 @@
 
-unset PATH ( bash: env: Permission denied )
+unset PATH ( bash: env: Permission denied ) - no funciona
 
-env | grep NAME ( list COINCIDENCES )
+env | grep NAME ( list COINCIDENCES en bash real) - no funciona
 
 PERMITED FUNCTIONS:
 readline, rl_clear_history, rl_on_new_line,
